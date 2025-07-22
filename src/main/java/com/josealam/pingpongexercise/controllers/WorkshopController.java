@@ -53,13 +53,6 @@ public class WorkshopController
        return ResponseEntity.ok(workshop);
     }
 
-    @PutMapping
-    public ResponseEntity<Workshop> putWorkShop(@RequestBody Workshop entity) {
-        Workshop workshop = workshopService.updateWorkshop(entity);
-        if(workshop == null) return ResponseEntity.internalServerError().body(null);
-        return ResponseEntity.ok(workshop);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Workshop> putWorkshopById(@PathVariable long id, @RequestBody Workshop entity) 
     {
