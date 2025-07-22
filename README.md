@@ -1,106 +1,118 @@
-# PingPong Exercise - Jakarta EE Implementation
+# PingPong Exercise - Jakarta EE + Swagger API Documentation
 
-This Spring Boot project has been migrated to use Jakarta EE (formerly Java EE) specifications, specifically Jakarta Bean Validation.
+This Spring Boot project implements Jakarta EE specifications with comprehensive API documentation using Swagger/OpenAPI 3.
 
-## Jakarta EE Migration Summary
+## Features
 
-### What Changed
+- ✅ **Jakarta EE Implementation**: Complete migration from `javax.*` to `jakarta.*`
+- ✅ **Jakarta Bean Validation**: Comprehensive input validation with custom error messages
+- ✅ **Swagger API Documentation**: Interactive API documentation with OpenAPI 3
+- ✅ **Global Exception Handling**: Consistent error responses across all endpoints
+- ✅ **Comprehensive Testing**: Full test coverage for validation scenarios
 
-1. **Validation API Migration**: Migrated from `javax.validation` to `jakarta.validation`
-2. **Enhanced Validation Rules**: Added comprehensive validation annotations to `VehicleDTO`
-3. **Global Exception Handling**: Implemented proper error handling for validation failures
-4. **Configuration**: Added Jakarta Bean Validation configuration
-5. **Testing**: Created comprehensive test suite for validation scenarios
+## Swagger API Documentation
 
-### Key Features
+### Accessing Swagger UI
 
-#### 1. Jakarta Bean Validation in VehicleDTO
+Once the application is running, visit:
+- **Swagger UI**: http://localhost:8080/swagger-ui/index.html
+- **OpenAPI JSON**: http://localhost:8080/v3/api-docs
 
-The `VehicleDTO` class now includes comprehensive Jakarta validation annotations:
+The Swagger UI provides:
+- Interactive API testing interface
+- Complete endpoint documentation
+- Request/response schemas with Jakarta validation constraints
+- Example requests and responses
+- Error response documentation
 
-```java
-@NotNull(message = "El modelo es obligatorio")
-@Size(min = 2, max = 100, message = "El modelo debe tener entre 2 y 100 caracteres")
-private String model;
+### API Documentation Features
 
-@NotNull(message = "La marca es obligatoria")
-@Size(min = 2, max = 50, message = "La marca debe tener entre 2 y 50 caracteres")
-private String brand;
+1. **Complete Endpoint Documentation**
+   - All CRUD operations for vehicles
+   - Parameter descriptions and constraints
+   - Response codes and descriptions
+   - Jakarta validation constraints displayed
 
-@NotNull(message = "El año es obligatorio")
-@Pattern(regexp = "\\d{4}", message = "El año debe ser un número de 4 dígitos")
-private String anio;
+2. **Interactive Testing**
+   - Test API endpoints directly from the browser
+   - Pre-filled example requests
+   - Real-time validation feedback
+   - Jakarta validation error responses
 
-@Pattern(regexp = "^[A-HJ-NPR-Z0-9]{17}$", message = "El VIN debe tener exactamente 17 caracteres alfanuméricos válidos")
-private String vin;
-
-@NotNull(message = "El ID del taller es obligatorio")
-@Positive(message = "El ID del taller debe ser un número positivo")
-private Long workshopId;
-```
-
-#### 2. Controller Validation
-
-Controllers now use `@Valid` annotation to trigger validation:
-
-```java
-@PostMapping("/save")
-public Vehicle saveVehicle(@Valid @RequestBody VehicleDTO vehicle) {
-    return vehicleService.saveVehicle(vehicle);
-}
-
-@PutMapping("/{id}")
-public Vehicle updateVehicle(@PathVariable Long id, @Valid @RequestBody VehicleDTO vehicleDTO) {
-    return vehicleService.updateVehicle(id, vehicleDTO);
-}
-```
-
-#### 3. Global Exception Handler
-
-The `GlobalExceptionHandler` class provides consistent error responses for validation failures:
-
-- **MethodArgumentNotValidException**: Handles `@Valid` annotation validation errors
-- **ConstraintViolationException**: Handles direct constraint violations
-- **Generic Exception**: Handles unexpected errors
-
-Example validation error response:
-```json
-{
-  "timestamp": "2025-07-22T09:24:16",
-  "status": 400,
-  "error": "Validation Failed",
-  "message": "Los datos proporcionados no son válidos",
-  "fieldErrors": {
-    "model": "El modelo es obligatorio",
-    "brand": "La marca es obligatoria"
-  }
-}
-```
-
-#### 4. Validation Configuration
-
-The `ValidationConfig` class ensures proper Jakarta Bean Validation setup in the Spring Boot application.
-
-#### 5. Comprehensive Testing
-
-The `VehicleDTOValidationTest` class includes tests for:
-- Valid DTO scenarios
-- Null field validation
-- Size constraint validation
-- Pattern validation (year, VIN)
-- Positive number validation
+3. **Schema Documentation**
+   - `VehicleDTO` with all validation constraints
+   - Field descriptions and examples
+   - Validation patterns and limits
 
 ## Dependencies
 
-### Added Jakarta Dependencies
+### Current Dependencies
 
 ```xml
+<!-- Spring Boot Starters -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
 <!-- Jakarta Bean Validation -->
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-validation</artifactId>
 </dependency>
+
+<!-- Swagger/OpenAPI Documentation -->
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.2.0</version>
+</dependency>
+
+<!-- Database and Utilities -->
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <scope>runtime</scope>
+</dependency>
+
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <optional>true</optional>
+</dependency>
 ```
+
+## Jakarta Bean Validation + Swagger Integration
+
+### Key Implementation Details
+
+1. **VehicleDTO Enhanced with Swagger Annotations**
+   - `@Schema` annotations document each field
+   - Jakarta validation constraints are automatically reflected in Swagger UI
+   - Example values and descriptions for better API understanding
+
+2. **Controller Documentation**
+   - `@Tag` for grouping endpoints
+   - `@Operation` for endpoint descriptions
+   - `@ApiResponse` for documenting response codes and scenarios
+   - `@Parameter` for path and query parameter documentation
+
+3. **Swagger Configuration**
+   - Custom `SwaggerConfig` class for API metadata
+   - Integrated with Jakarta Bean Validation
+   - Professional API documentation with contact info and versioning
+
+### Swagger UI Features
+
+- **Interactive Testing**: Test endpoints directly from the browser
+- **Validation Preview**: See Jakarta validation constraints in the UI
+- **Schema Documentation**: Complete model documentation with examples
+- **Error Handling**: Document validation error responses
 
 ## Running the Project
 
