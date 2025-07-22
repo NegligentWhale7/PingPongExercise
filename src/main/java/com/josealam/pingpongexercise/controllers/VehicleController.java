@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.josealam.pingpongexercise.models.Vehicle;
 import com.josealam.pingpongexercise.models.VehicleDTO;
 import com.josealam.pingpongexercise.service.VehicleService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -38,12 +41,12 @@ public class VehicleController {
     }
 
     @PostMapping("/save")
-    public Vehicle saveVehicle(@RequestBody VehicleDTO vehicle) {
+    public Vehicle saveVehicle(@Valid @RequestBody VehicleDTO vehicle) {
         return vehicleService.saveVehicle(vehicle);
     }
     
     @PutMapping("/{id}")
-    public Vehicle updateVehicle(@PathVariable Long id, @RequestBody VehicleDTO vehicleDTO) {
+    public Vehicle updateVehicle(@PathVariable Long id, @Valid @RequestBody VehicleDTO vehicleDTO) {
         return vehicleService.updateVehicle(id, vehicleDTO);
     }
 
