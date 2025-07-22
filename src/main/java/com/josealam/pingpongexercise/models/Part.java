@@ -2,6 +2,8 @@ package com.josealam.pingpongexercise.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +24,8 @@ public class Part {
     private Long id;
     private String name;
     private String description;
-
-    @OneToMany(mappedBy = "part")
-    private List<VehicleParts> vehicleParts;
+  
+    @ManyToMany(targetEntity = Vehicle.class, mappedBy = "parts")
+    @JsonIgnore
+    private List<Vehicle> vehicles;
 }
