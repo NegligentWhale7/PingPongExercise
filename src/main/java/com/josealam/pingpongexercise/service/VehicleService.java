@@ -68,8 +68,12 @@ public class VehicleService {
     }
 
     public Vehicle getVehicleById(Long id) {
-        return vehicleRepository.findById(id).orElse(null);
-    }   
+        var vehicle = vehicleRepository.findById(id);
+        if (vehicle.isEmpty()) {
+            throw new RuntimeException("Vehicle not found");
+        }
+        return vehicle.get();
+    }
 
     public void deleteVehicle(Long id) {
         vehicleRepository.deleteById(id);

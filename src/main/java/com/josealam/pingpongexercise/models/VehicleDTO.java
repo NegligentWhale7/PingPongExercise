@@ -41,5 +41,7 @@ public class VehicleDTO {
     private Long workshopId;
     
     @Schema(description = "Lista de IDs de las partes del vehículo", example = "[1, 2, 3]")
-    private List<@Positive(message = "Los IDs de las partes deben ser números positivos") Long> partIds;
+    @NotEmpty(message = "La lista de IDs de partes no puede estar vacía")
+    private List<
+    @Positive(message = "Los IDs de las partes deben ser números positivos") Long> partIds;
 }

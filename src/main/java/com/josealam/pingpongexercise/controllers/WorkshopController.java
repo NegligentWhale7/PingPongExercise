@@ -4,7 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.josealam.pingpongexercise.models.Workshop;
+import com.josealam.pingpongexercise.models.WorkshopDTO;
 import com.josealam.pingpongexercise.service.WorkshopService;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -34,7 +37,6 @@ public class WorkshopController
     public ResponseEntity<List<Workshop>> getWorkshops() 
     {
         List<Workshop> workshopList = workshopService.getAllWorkshops();
-        if (workshopList == null) return ResponseEntity.internalServerError().body(null);
         return ResponseEntity.ok(workshopList);
     }
     
@@ -46,7 +48,7 @@ public class WorkshopController
     }
 
     @PostMapping
-    public ResponseEntity<Workshop> postWorkshop(@RequestBody Workshop entity) 
+    public ResponseEntity<Workshop> postWorkshop(@Valid @RequestBody WorkshopDTO entity) 
     {
        Workshop workshop = workshopService.createWorkshop(entity);
        if (workshop == null) return ResponseEntity.internalServerError().body(null);
@@ -54,7 +56,7 @@ public class WorkshopController
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Workshop> putWorkshopById(@PathVariable long id, @RequestBody Workshop entity) 
+    public ResponseEntity<Workshop> putWorkshopById(@PathVariable long id, @Valid @RequestBody WorkshopDTO entity) 
     {
        Workshop workshop = workshopService.updateWorkshopById(id, entity);
        if (workshop == null) return ResponseEntity.internalServerError().body(null);
