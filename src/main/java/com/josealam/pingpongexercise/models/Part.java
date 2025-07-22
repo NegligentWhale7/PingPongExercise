@@ -2,6 +2,8 @@ package com.josealam.pingpongexercise.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,5 +23,6 @@ public class Part {
     private String description;
 
     @ManyToMany(targetEntity = Vehicle.class, mappedBy = "parts")
+    @JsonIgnore
     private List<Vehicle> vehicles;
 }
