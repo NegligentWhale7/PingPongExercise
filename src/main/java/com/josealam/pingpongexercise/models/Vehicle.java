@@ -1,5 +1,6 @@
 package com.josealam.pingpongexercise.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 public class Vehicle {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String model;
     private String brand;
@@ -31,9 +31,11 @@ public class Vehicle {
 
     @ManyToOne
     @JoinColumn(name = "workshop_id", nullable = false)
-    @JsonIgnore
     private Workshop workshop;
 
-   @OneToMany(mappedBy = "vehicle")
-   private List<VehicleParts> vehicleParts;
+    @ManyToMany
+    @JoinTable(name = "vehicle_parts", joinColumns = @JoinColumn(name = "vehicle_id"), 
+    inverseJoinColumns = @JoinColumn(name = "part_id", nullable = false))
+    @JsonIgnore
+    private List<Part> parts = new ArrayList<>();
 }

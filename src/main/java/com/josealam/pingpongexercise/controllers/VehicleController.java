@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.josealam.pingpongexercise.models.Vehicle;
+import com.josealam.pingpongexercise.models.VehicleDTO;
 import com.josealam.pingpongexercise.service.VehicleService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -37,14 +38,13 @@ public class VehicleController {
     }
 
     @PostMapping("/save")
-    public Vehicle saveVehicle(@RequestBody Vehicle vehicle) {
+    public Vehicle saveVehicle(@RequestBody VehicleDTO vehicle) {
         return vehicleService.saveVehicle(vehicle);
     }
     
     @PutMapping("/{id}")
-    public Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) {
-        vehicle.setId(id);
-        return vehicleService.saveVehicle(vehicle);
+    public Vehicle updateVehicle(@PathVariable Long id, @RequestBody VehicleDTO vehicleDTO) {
+        return vehicleService.updateVehicle(id, vehicleDTO);
     }
 
     @DeleteMapping("/{id}")
