@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.josealam.pingpongexercise.models.Part;
+import com.josealam.pingpongexercise.models.PartDTO;
 import com.josealam.pingpongexercise.repository.PartRepository;
 
 @Service
@@ -15,7 +16,20 @@ public class PartService {
         this.partRepository = partRepository;
     }
 
-    public Part savePart(Part part) {
+    public Part savePart(PartDTO partDto) {
+        Part part = new Part();
+        part.setName(partDto.getName());
+        part.setDescription(partDto.getDescription());
+
+        return partRepository.save(part);
+    }
+
+    public Part updatePartById(Long id, PartDTO partDto) {
+        Part part = new Part();
+        part.setId(id);
+        part.setName(partDto.getName());
+        part.setDescription(partDto.getDescription());
+
         return partRepository.save(part);
     }
 

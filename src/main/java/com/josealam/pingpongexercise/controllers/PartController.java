@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.josealam.pingpongexercise.models.Part;
+import com.josealam.pingpongexercise.models.PartDTO;
 import com.josealam.pingpongexercise.service.PartService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/parts")
@@ -32,7 +35,7 @@ public class PartController {
         return partService.getPartById(id);
     }
     @PostMapping("/save")
-    public Part savePart(@RequestBody Part part) {
+    public Part savePart(@Valid @RequestBody PartDTO part) {
         return partService.savePart(part);
     } 
     @DeleteMapping("/{id}")
@@ -40,8 +43,8 @@ public class PartController {
         partService.deletePart(id);
     }
     @PutMapping("/{id}")
-    public Part updatePart(@PathVariable Long id, @RequestBody Part part) {
-        part.setId(id);
-        return partService.savePart(part);
+    public Part updatePart(@PathVariable Long id, @Valid @RequestBody PartDTO partDto) 
+    {
+        return partService.updatePartById(id, partDto);
     }
 }

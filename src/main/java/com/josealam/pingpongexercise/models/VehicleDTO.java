@@ -32,5 +32,7 @@ public class VehicleDTO {
     @Positive(message = "El ID del taller debe ser un número positivo")
     private Long workshopId;
     
-    private List<@Positive(message = "Los IDs de las partes deben ser números positivos") Long> partIds;
+    @NotEmpty(message = "La lista de IDs de partes no puede estar vacía")
+    private List<
+    @Positive(message = "Los IDs de las partes deben ser números positivos") Long> partIds;
 }

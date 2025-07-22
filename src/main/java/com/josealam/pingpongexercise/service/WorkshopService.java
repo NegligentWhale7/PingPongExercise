@@ -2,6 +2,8 @@ package com.josealam.pingpongexercise.service;
 
 import com.josealam.pingpongexercise.repository.WorkshopRepository;
 import com.josealam.pingpongexercise.models.Workshop;
+import com.josealam.pingpongexercise.models.WorkshopDTO;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -9,11 +11,11 @@ import org.springframework.stereotype.Service;
 
 /* @author Alam Armas */
 @Service
-public class WorkshopService {
+public class WorkshopService 
+{
     private final WorkshopRepository workshopRepository;
 
-    public WorkshopService(WorkshopRepository workshopRepository) 
-    {
+    public WorkshopService(WorkshopRepository workshopRepository) {
         this.workshopRepository = workshopRepository;
     }
 
@@ -27,21 +29,30 @@ public class WorkshopService {
         return workshopRepository.findById(id);
     }
 
-    public Workshop createWorkshop(Workshop workshop) 
+    public Workshop createWorkshop(WorkshopDTO workshopDto) 
     {
+        Workshop workshop = new Workshop();
+        workshop.setName(workshopDto.getName());
+        workshop.setDescription(workshopDto.getDescription());
         return workshopRepository.save(workshop);
     }
 
-    public Workshop updateWorkshop(Workshop workshop) 
+    public Workshop updateWorkshop(WorkshopDTO workshopDto) 
     {
+        Workshop workshop = new Workshop();
+        workshop.setName(workshopDto.getName());
+        workshop.setDescription(workshopDto.getDescription());
         if (workshop.getWorkshopId() == 0) {
             return null; // or throw an exception
         }
         return workshopRepository.save(workshop);
     }
 
-    public Workshop updateWorkshopById(Long id, Workshop workshop) 
+    public Workshop updateWorkshopById(Long id, WorkshopDTO workshopDto) 
     {
+        Workshop workshop = new Workshop();
+        workshop.setName(workshopDto.getName());
+        workshop.setDescription(workshopDto.getDescription());
         workshop.setWorkshopId(id); // Ensure the entity has the correct ID
         return workshopRepository.save(workshop);
     }
