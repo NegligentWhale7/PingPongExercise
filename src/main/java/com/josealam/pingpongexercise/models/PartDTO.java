@@ -7,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PartDTO {
-    @NotNull(message = "El nombre del taller es obligatorio")
+    @NotNull(message = "El nombre de la pieza es obligatorio")
+    @NotBlank(message = "El nombre de la pieza no puede estar vacío")
     @Size(min = 2, max = 200, message = "El nombre debe tener entre 2 y 200 caracteres")
     private String name;
     @NotNull(message = "La descripción del taller es obligatoria")

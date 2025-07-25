@@ -32,8 +32,8 @@ public class WorkshopService
     public Workshop createWorkshop(WorkshopDTO workshopDto) 
     {
         Workshop workshop = new Workshop();
-        workshop.setName(workshopDto.getName());
-        workshop.setDescription(workshopDto.getDescription());
+        workshop.setName(workshopDto.getName().trim());
+        workshop.setDescription(workshopDto.getDescription().trim());
         return workshopRepository.save(workshop);
     }
 

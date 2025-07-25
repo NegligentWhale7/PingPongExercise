@@ -12,30 +12,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Vehicle {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String model;
-    private String brand;
-    private String anio;
-    private String color;
-    private String vin;
+    private Long userId;
+    private Double totalPrice;  
 
-    @ManyToOne
-    @JoinColumn(name = "workshop_id", nullable = false)
-    private Workshop workshop;
+
+
 
     @ManyToMany
-    @JoinTable(name = "vehicle_parts", joinColumns = @JoinColumn(name = "vehicle_id"), 
-    inverseJoinColumns = @JoinColumn(name = "part_id", nullable = false))
-  
-    private List<Part> parts = new ArrayList<>();
+    @JoinTable(name = "cart_products", joinColumns = @JoinColumn(name = "cart_id"), 
+    inverseJoinColumns = @JoinColumn(name = "product_id", nullable = false))
+    private List<Product> products = new ArrayList<>();
 }
